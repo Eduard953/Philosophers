@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:15:36 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/17 16:45:40 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/18 15:22:02 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_vars
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_eat;
+	int				dead;
 	long long		start;
 	struct s_info	*phils;
 	pthread_mutex_t	access;
@@ -48,13 +49,12 @@ typedef struct s_info
 	long long   last_eat;
 	int			eaten;
 	long long   birth;
-	int			fin;
-	int			starved;
+	int			ate;
 	int			left_fork;
 	int			right_fork;
-	pthread_mutex_t	arb;
 	pthread_t		th;
 	t_vars		*vars;
+	pthread_mutex_t	arb;
 } t_info;
 
 // typedef struct s_phil
@@ -71,5 +71,6 @@ int			ft_atoi(const char *nptr);
 int			error(char *message);
 void		message(t_info *phil, int m_code);
 void		death(t_info *phil);
+void		clean(t_vars *vars);
 
 #endif

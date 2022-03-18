@@ -6,19 +6,19 @@
 #    By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:15:03 by ebeiline          #+#    #+#              #
-#    Updated: 2022/03/18 13:18:38 by ebeiline         ###   ########.fr        #
+#    Updated: 2022/03/18 15:25:09 by ebeiline         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			= gcc
 
-CFLAGS		= -Wall -Wextra -Werror 
+CFLAGS		= -Wall -Wextra -Werror -g -fsanitize=thread
 
 NAME		= philosophers
 
 MAKE		= make
 
-SRC			= main.c philosophers.c init.c time.c utils.c
+SRC			= main.c philosophers.c init.c time.c utils.c clean.c
 
 OBJ			= ${SRC:.c=.o}
 

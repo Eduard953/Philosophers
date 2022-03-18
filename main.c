@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 12:37:13 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/17 17:12:23 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/18 15:18:05 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,21 @@ void *arbitrator(void *vars_void)
 	while (1)
 	{
 		i %= vars->num_philo;
-		pthread_mutex_lock(&vars->phils[i].arb);
-		if (!vars->phils[i].fin && (vars->phils[i].eaten == vars->max_eat))
-		{
-			vars->phils[i].fin = 1;
-			count++;
-		}
 		if (count == vars->num_philo)
 			exit(1);
+		pthread_mutex_lock(&vars->phils[i].arb);
+		if (!vars->phils[i].ate && (vars->phils[i].eaten == vars->max_eat))
+		{
+			vars->phils[i].ate = 1;
+			count++;
+		}
 		if ((gettime() - vars->phils[i].last_eat) > vars->time_to_die)
 		{
 			death(&vars->phils[i]);
 			return ((void *)0);
 		}
 		pthread_mutex_unlock(&vars->phils[i].arb);
-		usleep(500);
+		//usleep(500);
 		i++;
 	}
 	pthread_mutex_unlock(&vars->death);
@@ -78,12 +78,14 @@ int create_threads(t_vars *vars)
 	i = 0;
     while (i < (vars->num_philo))
 	{
+		pthread_mutex_lock(&vars->phils[i].arb);
 		vars->phils[i].last_eat = gettime();
+		pthread_mutex_unlock(&vars->phils[i].arb);
 		rout_v = (void *)&(vars->phils[i]);
 		if (pthread_create(&(vars->phils[i].th), NULL, &routine, rout_v))
 			return (1);
 		i++;
-		//usleep(100);
+		usleep(100);
 	}
 	usleep(1000);
 	i = 0;
@@ -106,5 +108,7 @@ int main(int argc, char **argv)
 	init_mutex(&vars);
 	init_philos(&vars);
     create_threads(&vars);
+	pthread_mutex_lock(&vars.death);
+	clean(&vars);
     return (0);
 }
