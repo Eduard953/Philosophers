@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:12:20 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/17 16:55:03 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/18 13:18:27 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void    *routine(void *philo)
 
 	phil = (t_info *)philo;
 	phil->last_eat = gettime();
+	if (phil->philo_id % 2 == 0)
+		usleep(500);
 	while (1)
 	{
 		//printf("PHIL FIN %d  %d\n",phil->philo_id, phil->fin);

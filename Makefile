@@ -6,7 +6,7 @@
 #    By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:15:03 by ebeiline          #+#    #+#              #
-#    Updated: 2022/03/15 16:16:20 by ebeiline         ###   ########.fr        #
+#    Updated: 2022/03/18 13:18:38 by ebeiline         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ OBJ			= ${SRC:.c=.o}
 all:		$(NAME)
 
 
-$(NAME):
+$(NAME): $(SRC)
 		$(CC) $(SRC) -o $(NAME) $(CFLAGS) $(INCLUDES)
 
 clean:		
