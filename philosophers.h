@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:15:36 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/18 15:22:02 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/18 15:53:24 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_vars
 	struct s_info	*phils;
 	pthread_mutex_t	access;
 	pthread_mutex_t	death;
+	pthread_mutex_t	guard_d;
 	pthread_mutex_t	*forks;
 } t_vars;
 

@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:51:36 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/18 14:59:33 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/22 18:07:43 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ void	clean(t_vars *vars)
 		free(vars->phils);
 	}
 	pthread_mutex_destroy(&vars->access);
+	pthread_mutex_destroy(&vars->guard_d);
 	pthread_mutex_destroy(&vars->death);
+	exit(0);
 }

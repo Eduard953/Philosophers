@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 12:37:13 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/18 15:18:05 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/22 16:46:23 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int main(int argc, char **argv)
 	init_philos(&vars);
     create_threads(&vars);
 	pthread_mutex_lock(&vars.death);
+	pthread_mutex_unlock(&vars.death);
 	clean(&vars);
     return (0);
 }
