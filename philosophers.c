@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:12:20 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/22 18:08:42 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/22 18:14:22 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void    *routine(void *philo)
 
 	phil = (t_info *)philo;
 	if (phil->philo_id % 2 == 0)
-		usleep(500);
+		usleep(1000);
 	while (1)
 	{
 		eat(phil);
