@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 12:37:13 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/22 16:46:23 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/23 14:41:35 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void *arbitrator(void *vars_void)
 			return ((void *)0);
 		}
 		pthread_mutex_unlock(&vars->phils[i].arb);
-		//usleep(500);
+		usleep(500);
 		i++;
 	}
 	pthread_mutex_unlock(&vars->death);

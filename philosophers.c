@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:12:20 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/22 18:14:22 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/23 13:44:41 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	eat(t_info *phil)
 {
 	take(phil);
 	message(phil, 1);
+	usleep(phil->vars->time_to_eat * 1000);
 	pthread_mutex_lock(&phil->arb);
 	phil->last_eat = gettime();
 	phil->eaten++;
 	pthread_mutex_unlock(&phil->arb);
-	usleep(phil->vars->time_to_eat * 1000);
 	drop(phil);
 }
 
@@ -64,8 +64,8 @@ void    *routine(void *philo)
 		usleep(1000);
 	while (1)
 	{
-		eat(phil);
 		think(phil);
+		eat(phil);
 		sleep_p(phil);
 	}
 	return (NULL);
