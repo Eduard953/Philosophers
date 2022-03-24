@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 12:37:13 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/24 11:36:52 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/24 11:39:40 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void *arbitrator(void *vars_void)
 	i = 0;
 	count = 0;
 	vars = (t_vars *)vars_void;
-	usleep(500);
 	while (1)
 	{
 		i %= vars->num_philo;
