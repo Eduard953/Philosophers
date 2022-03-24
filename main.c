@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 12:37:13 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/23 14:41:35 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/24 11:36:52 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int create_threads(t_vars *vars)
 		if (pthread_create(&(vars->phils[i].th), NULL, &routine, rout_v))
 			return (1);
 		i++;
-		usleep(100);
+		//usleep(100);
 	}
 	usleep(1000);
 	i = 0;
