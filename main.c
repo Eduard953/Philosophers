@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 12:37:13 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/24 11:39:40 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/24 16:32:06 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,69 +29,27 @@ static int	check_argv(t_vars *vars, int argc)
 	return (0);
 }
 
-void *arbitrator(void *vars_void)
-{
-	t_vars	*vars;
-	int		i;
-	int		count;
-
-	i = 0;
-	count = 0;
-	vars = (t_vars *)vars_void;
-	while (1)
-	{
-		i %= vars->num_philo;
-		if (count == vars->num_philo)
-			exit(1);
-		pthread_mutex_lock(&vars->phils[i].arb);
-		if (!vars->phils[i].ate && (vars->phils[i].eaten == vars->max_eat))
-		{
-			vars->phils[i].ate = 1;
-			count++;
-		}
-		if ((gettime() - vars->phils[i].last_eat) > vars->time_to_die)
-		{
-			death(&vars->phils[i]);
-			return ((void *)0);
-		}
-		pthread_mutex_unlock(&vars->phils[i].arb);
-		usleep(500);
-		i++;
-	}
-	pthread_mutex_unlock(&vars->death);
-	return ((void *)0);
-}
-
 static
 int create_threads(t_vars *vars)
 {
 	int				i;
 	void 			*rout_v;
-	pthread_t		arb;
 
 
 	vars->start = gettime();
-	if (pthread_create(&arb, NULL, arbitrator, vars))
-		return (1);
-	pthread_detach(arb);
 	i = 0;
     while (i < (vars->num_philo))
 	{
-		pthread_mutex_lock(&vars->phils[i].arb);
-		vars->phils[i].last_eat = gettime();
-		pthread_mutex_unlock(&vars->phils[i].arb);
 		rout_v = (void *)&(vars->phils[i]);
 		if (pthread_create(&(vars->phils[i].th), NULL, &routine, rout_v))
 			return (1);
 		i++;
-		//usleep(100);
 	}
-	usleep(1000);
 	i = 0;
+	usleep(500);
     while (i < (vars->num_philo))
 	{
-		if (pthread_join(vars->phils[i].th, NULL))
-			return (1);
+		pthread_join(vars->phils[i].th, NULL);
 		i++;
 	}
 	return (0);
@@ -107,8 +65,6 @@ int main(int argc, char **argv)
 	init_mutex(&vars);
 	init_philos(&vars);
     create_threads(&vars);
-	pthread_mutex_lock(&vars.death);
-	pthread_mutex_unlock(&vars.death);
 	clean(&vars);
     return (0);
 }

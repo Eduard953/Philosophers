@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:15:36 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/18 15:53:24 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/24 12:38:45 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ int			error(char *message);
 void		message(t_info *phil, int m_code);
 void		death(t_info *phil);
 void		clean(t_vars *vars);
+void 		*arbitrator(void *vars_void);
 
 #endif

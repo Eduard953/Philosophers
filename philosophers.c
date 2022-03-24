@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:12:20 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/23 13:44:41 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/24 16:30:26 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,10 @@ void	drop(t_info *phil)
 
 void	eat(t_info *phil)
 {
-	take(phil);
 	message(phil, 1);
 	usleep(phil->vars->time_to_eat * 1000);
-	pthread_mutex_lock(&phil->arb);
 	phil->last_eat = gettime();
 	phil->eaten++;
-	pthread_mutex_unlock(&phil->arb);
-	drop(phil);
 }
 
 void	sleep_p(t_info *phil)
@@ -44,29 +40,49 @@ void	sleep_p(t_info *phil)
 	usleep(phil->vars->time_to_sleep * 1000);
 }
 
-void	think(t_info *phil)
+int check_eat(t_info *phil)
 {
-	message(phil, 3);
+	if (phil->eaten == phil->vars->max_eat)
+		return (1);
+	return (0);
 }
 
-void	death(t_info *phil)
+int check_routine(t_info *phil)
 {
-	message(phil, 4);
-	pthread_mutex_unlock(&phil->vars->death);
+	if (phil->vars->num_philo == 1)
+	{
+		message(phil, 3);
+		message(phil, 0);
+		while (gettime() - phil->last_eat <= phil->vars->time_to_die)
+			usleep(5);
+	}
+	if (phil->eaten == phil->vars->max_eat)
+		return (1);
+	if ((gettime() - phil->last_eat) > phil->vars->time_to_die)
+	{
+		message(phil, 4);
+		return (1);
+	}
+	return (0);
 }
 
 void    *routine(void *philo)
 {
-	t_info *phil;
-
+	t_info 	*phil;
+	
 	phil = (t_info *)philo;
+	phil->last_eat = gettime();
 	if (phil->philo_id % 2 == 0)
-		usleep(1000);
-	while (1)
+		usleep(500);
+	while (!check_routine(phil))
 	{
-		think(phil);
+		message(phil, 3);
+		take(phil);
 		eat(phil);
+		drop(phil);
+		if (check_eat(phil))
+			break;
 		sleep_p(phil);
 	}
-	return (NULL);
+	return ((void *)0);
 }
