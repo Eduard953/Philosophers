@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:12:20 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/24 16:48:06 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/24 17:03:29 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,34 @@ void	drop(t_info *phil)
 	pthread_mutex_unlock(&phil->vars->forks[phil->right_fork]);
 }
 
-int	check_sleep(t_info *phil, int time)
+int	check_w_eat(t_info *phil)
 {
-	int	curr;
-
-	curr = 0;
-	while (curr < time)
+	phil->waiting = 0;
+	while (phil->waiting < phil->vars->time_to_eat * 1000)
 	{
 		if (check_routine(phil))
+		{
+			printf("%d\n", phil->waiting);
 			return (1);
+		}
 		usleep(5);
-		curr += 5;
+		phil->waiting += 5;
+	}
+	return (0);
+}
+
+int	check_sleep(t_info *phil)
+{
+	phil->waiting = 0;
+	while (phil->waiting < phil->vars->time_to_sleep * 1000)
+	{
+		if (check_routine(phil))
+		{
+			printf("%d\n", phil->waiting);
+			return (1);
+		}
+		usleep(5);
+		phil->waiting += 5;
 	}
 	return (0);
 }
@@ -63,7 +80,7 @@ int	check_sleep(t_info *phil, int time)
 int	eat(t_info *phil)
 {
 	message(phil, 1);
-	if (check_sleep(phil, phil->vars->time_to_eat * 1000))
+	if (check_w_eat(phil))
 		return (1);
 	phil->last_eat = gettime();
 	phil->eaten++;
@@ -73,7 +90,7 @@ int	eat(t_info *phil)
 int	sleep_p(t_info *phil)
 {
 	message(phil, 2);
-	if (check_sleep(phil, phil->vars->time_to_sleep * 1000))
+	if (check_sleep(phil))
 		return (1);
 	return (0);
 }
