@@ -6,46 +6,11 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:12:20 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/24 16:30:26 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/24 16:48:06 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-void	take(t_info *phil)
-{
-	pthread_mutex_lock(&phil->vars->forks[phil->left_fork]);
-	message(phil, 0);
-	pthread_mutex_lock(&phil->vars->forks[phil->right_fork]);
-	message(phil, 0);
-}
-
-void	drop(t_info *phil)
-{
-	pthread_mutex_unlock(&phil->vars->forks[phil->left_fork]);
-	pthread_mutex_unlock(&phil->vars->forks[phil->right_fork]);
-}
-
-void	eat(t_info *phil)
-{
-	message(phil, 1);
-	usleep(phil->vars->time_to_eat * 1000);
-	phil->last_eat = gettime();
-	phil->eaten++;
-}
-
-void	sleep_p(t_info *phil)
-{
-	message(phil, 2);
-	usleep(phil->vars->time_to_sleep * 1000);
-}
-
-int check_eat(t_info *phil)
-{
-	if (phil->eaten == phil->vars->max_eat)
-		return (1);
-	return (0);
-}
 
 int check_routine(t_info *phil)
 {
@@ -66,6 +31,60 @@ int check_routine(t_info *phil)
 	return (0);
 }
 
+void	take(t_info *phil)
+{
+	pthread_mutex_lock(&phil->vars->forks[phil->left_fork]);
+	message(phil, 0);
+	pthread_mutex_lock(&phil->vars->forks[phil->right_fork]);
+	message(phil, 0);
+}
+
+void	drop(t_info *phil)
+{
+	pthread_mutex_unlock(&phil->vars->forks[phil->left_fork]);
+	pthread_mutex_unlock(&phil->vars->forks[phil->right_fork]);
+}
+
+int	check_sleep(t_info *phil, int time)
+{
+	int	curr;
+
+	curr = 0;
+	while (curr < time)
+	{
+		if (check_routine(phil))
+			return (1);
+		usleep(5);
+		curr += 5;
+	}
+	return (0);
+}
+
+int	eat(t_info *phil)
+{
+	message(phil, 1);
+	if (check_sleep(phil, phil->vars->time_to_eat * 1000))
+		return (1);
+	phil->last_eat = gettime();
+	phil->eaten++;
+	return (0);
+}
+
+int	sleep_p(t_info *phil)
+{
+	message(phil, 2);
+	if (check_sleep(phil, phil->vars->time_to_sleep * 1000))
+		return (1);
+	return (0);
+}
+
+int check_eat(t_info *phil)
+{
+	if (phil->eaten == phil->vars->max_eat)
+		return (1);
+	return (0);
+}
+
 void    *routine(void *philo)
 {
 	t_info 	*phil;
@@ -78,11 +97,13 @@ void    *routine(void *philo)
 	{
 		message(phil, 3);
 		take(phil);
-		eat(phil);
+		if (eat(phil))
+			break;
 		drop(phil);
 		if (check_eat(phil))
 			break;
-		sleep_p(phil);
+		if (sleep_p(phil))
+			break;
 	}
 	return ((void *)0);
 }
