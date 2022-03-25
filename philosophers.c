@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:12:20 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/24 17:03:29 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/24 17:45:15 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,43 +45,22 @@ void	drop(t_info *phil)
 	pthread_mutex_unlock(&phil->vars->forks[phil->right_fork]);
 }
 
-int	check_w_eat(t_info *phil)
+int	check_death(t_info *phil, int time)
 {
-	phil->waiting = 0;
-	while (phil->waiting < phil->vars->time_to_eat * 1000)
-	{
-		if (check_routine(phil))
-		{
-			printf("%d\n", phil->waiting);
-			return (1);
-		}
-		usleep(5);
-		phil->waiting += 5;
-	}
-	return (0);
-}
-
-int	check_sleep(t_info *phil)
-{
-	phil->waiting = 0;
-	while (phil->waiting < phil->vars->time_to_sleep * 1000)
-	{
-		if (check_routine(phil))
-		{
-			printf("%d\n", phil->waiting);
-			return (1);
-		}
-		usleep(5);
-		phil->waiting += 5;
-	}
+	printf("time %lld\n", (gettime() - phil->last_eat));
+	if ((phil->last_eat - phil->vars->start + time) > (gettime() - phil->vars->start + phil->vars->time_to_die))
+		return (1);
 	return (0);
 }
 
 int	eat(t_info *phil)
 {
 	message(phil, 1);
-	if (check_w_eat(phil))
+	if (check_death(phil, phil->vars->time_to_eat))
+	{
+		printf("hey%d\n", phil->philo_id);
 		return (1);
+	}
 	phil->last_eat = gettime();
 	phil->eaten++;
 	return (0);
@@ -90,7 +69,7 @@ int	eat(t_info *phil)
 int	sleep_p(t_info *phil)
 {
 	message(phil, 2);
-	if (check_sleep(phil))
+	if (check_death(phil, phil->vars->time_to_sleep))
 		return (1);
 	return (0);
 }
@@ -100,6 +79,11 @@ int check_eat(t_info *phil)
 	if (phil->eaten == phil->vars->max_eat)
 		return (1);
 	return (0);
+}
+
+void	death(t_info *phil)
+{
+	usleep((phil->vars->time_to_die - (gettime() - phil->last_eat) * 1000));
 }
 
 void    *routine(void *philo)
@@ -115,12 +99,18 @@ void    *routine(void *philo)
 		message(phil, 3);
 		take(phil);
 		if (eat(phil))
+		{
+			death(phil);
 			break;
+		}
 		drop(phil);
 		if (check_eat(phil))
 			break;
 		if (sleep_p(phil))
+		{
+			death(phil);
 			break;
+		}
 	}
 	return ((void *)0);
 }
