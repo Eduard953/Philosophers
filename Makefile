@@ -6,13 +6,13 @@
 #    By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:15:03 by ebeiline          #+#    #+#              #
-#    Updated: 2022/03/24 11:54:41 by ebeiline         ###   ########.fr        #
+#    Updated: 2022/03/29 17:11:02 by ebeiline         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			= gcc
 
-CFLAGS		= -Wall -Wextra -Werror -g -fsanitize=thread
+CFLAGS		= -Wall -Wextra -Werror -pthread -g -fsanitize=thread
 
 NAME		= philosophers
 

@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:12:20 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/24 17:45:15 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/29 22:15:36 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int check_routine(t_info *phil)
 	if ((gettime() - phil->last_eat) > phil->vars->time_to_die)
 	{
 		message(phil, 4);
+		clean(phil->vars);
 		return (1);
 	}
 	return (0);
@@ -47,9 +48,15 @@ void	drop(t_info *phil)
 
 int	check_death(t_info *phil, int time)
 {
-	printf("time %lld\n", (gettime() - phil->last_eat));
-	if ((phil->last_eat - phil->vars->start + time) > (gettime() - phil->vars->start + phil->vars->time_to_die))
-		return (1);
+	long	start;
+	
+	start = gettime();
+	usleep(5);
+	while ((gettime() - start) < time)
+	{
+		if (check_routine(phil))
+			return (1);
+	}
 	return (0);
 }
 
