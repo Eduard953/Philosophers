@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:15:36 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/29 22:16:06 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/29 22:19:38 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_info
 	int			philo_id;
 	long long   last_eat;
 	int			eaten;
-	int			waiting;
 	long long   birth;
 	int			ate;
 	int			left_fork;
