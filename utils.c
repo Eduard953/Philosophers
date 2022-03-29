@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 18:17:06 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/29 16:10:02 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/29 22:01:11 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ char	*choose_str(int m_code)
 		return("is thinking");
 	if (m_code == 4)
 		return("died");
-	if (m_code == 42)
-		return("has dropped a fork");
 	return(NULL);
 }
 

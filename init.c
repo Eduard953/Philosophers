@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 12:35:13 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/18 15:53:43 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/29 22:04:22 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	init_philos(t_vars *vars)
 		vars->phils[i].last_eat = gettime();
 		vars->phils[i].eaten = 0;
 		vars->phils[i].ate = 0;
+		vars->phils[i].alive = 1;
 		vars->phils[i].right_fork = i;
 		vars->phils[i].left_fork = (i + 1) % vars->num_philo;
 		vars->phils[i].vars = vars;
