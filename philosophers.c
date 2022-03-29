@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:12:20 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/24 16:48:06 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/29 16:10:20 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,30 @@ void	take(t_info *phil)
 void	drop(t_info *phil)
 {
 	pthread_mutex_unlock(&phil->vars->forks[phil->left_fork]);
+	message(phil, 42);
 	pthread_mutex_unlock(&phil->vars->forks[phil->right_fork]);
+	message(phil, 42);
 }
 
 int	check_sleep(t_info *phil, int time)
 {
-	int	curr;
-
-	curr = 0;
-	while (curr < time)
+	while (1)
 	{
+		pthread_mutex_lock(&phil->vars->guard_d);
+		if (gettime() - phil->last_eat >= time)
+			break ;
+		pthread_mutex_unlock(&phil->vars->guard_d);
 		if (check_routine(phil))
 			return (1);
-		usleep(5);
-		curr += 5;
 	}
+	pthread_mutex_unlock(&phil->vars->guard_d);
 	return (0);
 }
 
 int	eat(t_info *phil)
 {
 	message(phil, 1);
-	if (check_sleep(phil, phil->vars->time_to_eat * 1000))
+	if (check_sleep(phil, phil->vars->time_to_eat))
 		return (1);
 	phil->last_eat = gettime();
 	phil->eaten++;
@@ -73,7 +75,7 @@ int	eat(t_info *phil)
 int	sleep_p(t_info *phil)
 {
 	message(phil, 2);
-	if (check_sleep(phil, phil->vars->time_to_sleep * 1000))
+	if (check_sleep(phil, phil->vars->time_to_sleep))
 		return (1);
 	return (0);
 }
