@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 18:17:06 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/30 13:45:26 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/30 14:37:32 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ char	*choose_str(int m_code)
 void	message(t_info *phil, int m_code)
 {
 	pthread_mutex_lock(&phil->vars->access);
+	pthread_mutex_lock(&phil->vars->guard_d);
 	if (!phil->vars->dead)
 	{
 		if (m_code == 4)
@@ -76,5 +77,6 @@ void	message(t_info *phil, int m_code)
 		printf("%llums Philosopher %d %s\n", gettime() - phil->vars->start,
 			phil->philo_id + 1, choose_str(m_code));
 	}
+	pthread_mutex_unlock(&phil->vars->guard_d);
 	pthread_mutex_unlock(&phil->vars->access);
 }
