@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:12:20 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/30 13:46:47 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/30 13:59:01 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,6 @@ int	check_routine(t_info *phil)
 		exit(0);
 	}
 	return (0);
-}
-
-void	take(t_info *phil)
-{
-	pthread_mutex_lock(&phil->vars->forks[phil->left_fork]);
-	message(phil, 0);
-	pthread_mutex_lock(&phil->vars->forks[phil->right_fork]);
-	message(phil, 0);
-}
-
-void	drop(t_info *phil)
-{
-	pthread_mutex_unlock(&phil->vars->forks[phil->left_fork]);
-	pthread_mutex_unlock(&phil->vars->forks[phil->right_fork]);
 }
 
 int	check_death(t_info *phil, int time)
@@ -74,13 +60,6 @@ int	sleep_p(t_info *phil)
 {
 	message(phil, 2);
 	if (check_death(phil, phil->vars->time_to_sleep))
-		return (1);
-	return (0);
-}
-
-int	check_eat(t_info *phil)
-{
-	if (phil->eaten == phil->vars->max_eat)
 		return (1);
 	return (0);
 }

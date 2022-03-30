@@ -6,7 +6,7 @@
 #    By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:15:03 by ebeiline          #+#    #+#              #
-#    Updated: 2022/03/29 17:11:02 by ebeiline         ###   ########.fr        #
+#    Updated: 2022/03/30 13:58:23 by ebeiline         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NAME		= philosophers
 
 MAKE		= make
 
-SRC			= main.c philosophers.c init.c time.c utils.c clean.c
+SRC			= main.c philosophers.c init.c time.c utils.c clean.c eating.c
 
 OBJ			= ${SRC:.c=.o}
 

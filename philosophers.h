@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:15:36 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/30 13:50:08 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/30 13:59:39 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ long long	gettime(void);
 int			ft_atoi(const char *nptr);
 int			error(char *message);
 void		message(t_info *phil, int m_code);
-void		death(t_info *phil);
 void		clean(t_vars *vars);
+void		take(t_info *phil);
+int			check_eat(t_info *phil);
+void		drop(t_info *phil);
 
 #endif
