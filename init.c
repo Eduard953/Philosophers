@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 12:35:13 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/29 22:19:27 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/30 13:50:30 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,20 @@ int	init_philos(t_vars *vars)
 		vars->phils[i].right_fork = i;
 		vars->phils[i].left_fork = (i + 1) % vars->num_philo;
 		vars->phils[i].vars = vars;
-		pthread_mutex_init(&vars->phils[i].arb, NULL);
 	}
 	return (0);
 }
 
-void    init_info(t_vars *vars, int argc, char **argv)
+void	init_info(t_vars *vars, int argc, char **argv)
 {
-    vars->num_philo = ft_atoi(argv[1]);
+	vars->num_philo = ft_atoi(argv[1]);
 	vars->time_to_die = ft_atoi(argv[2]);
 	vars->time_to_eat = ft_atoi(argv[3]);
 	vars->time_to_sleep = ft_atoi(argv[4]);
 	vars->max_eat = -1;
 	vars->dead = 0;
-    if (argc == 6)
-        vars->max_eat = ft_atoi(argv[5]);
+	if (argc == 6)
+		vars->max_eat = ft_atoi(argv[5]);
 }
 
 int	init_mutex(t_vars *vars)
@@ -56,7 +55,8 @@ int	init_mutex(t_vars *vars)
 	pthread_mutex_init(&vars->guard_d, NULL);
 	pthread_mutex_lock(&vars->death);
 	pthread_mutex_init(&vars->access, NULL);
-	vars->forks = (pthread_mutex_t *)malloc(sizeof(*vars->forks) * vars->num_philo);
+	vars->forks = (pthread_mutex_t *)malloc
+		(sizeof(*vars->forks) * vars->num_philo);
 	if (!vars->forks)
 		return (error("malloc failed"));
 	while (i < vars->num_philo)

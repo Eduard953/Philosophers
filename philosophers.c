@@ -6,13 +6,13 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:12:20 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/30 13:37:17 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/30 13:46:47 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int check_routine(t_info *phil)
+int	check_routine(t_info *phil)
 {
 	if (phil->vars->num_philo == 1)
 	{
@@ -49,7 +49,7 @@ void	drop(t_info *phil)
 int	check_death(t_info *phil, int time)
 {
 	long	start;
-	
+
 	start = gettime();
 	usleep(5);
 	while ((gettime() - start) < time)
@@ -78,17 +78,17 @@ int	sleep_p(t_info *phil)
 	return (0);
 }
 
-int check_eat(t_info *phil)
+int	check_eat(t_info *phil)
 {
 	if (phil->eaten == phil->vars->max_eat)
 		return (1);
 	return (0);
 }
 
-void    *routine(void *philo)
+void	*routine(void *philo)
 {
-	t_info 	*phil;
-	
+	t_info	*phil;
+
 	phil = (t_info *)philo;
 	phil->last_eat = gettime();
 	if (phil->philo_id % 2 == 0)
@@ -98,12 +98,12 @@ void    *routine(void *philo)
 		message(phil, 3);
 		take(phil);
 		if (eat(phil))
-			break;
+			break ;
 		drop(phil);
 		if (check_eat(phil))
-			break;
+			break ;
 		if (sleep_p(phil))
-			break;
+			break ;
 	}
 	return ((void *)0);
 }

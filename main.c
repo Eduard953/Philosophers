@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 12:37:13 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/30 13:36:06 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/30 13:42:36 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	check_argv(t_vars *vars, int argc)
 {
 	if (argc != 6 && argc != 5)
-		return(error("Error: wrong amount of args\n"));
+		return (error("Error: wrong amount of args\n"));
 	if (argc == 6 && vars->max_eat <= 0)
 		return (error("ERROR: negative amount of must eat\n"));
 	if (vars->num_philo < 0)
@@ -30,15 +30,14 @@ static int	check_argv(t_vars *vars, int argc)
 }
 
 static
-int create_threads(t_vars *vars)
+int	create_threads(t_vars *vars)
 {
-	int				i;
-	void 			*rout_v;
-
+	int		i;
+	void	*rout_v;
 
 	vars->start = gettime();
 	i = 0;
-    while (i < (vars->num_philo))
+	while (i < (vars->num_philo))
 	{
 		rout_v = (void *)&(vars->phils[i]);
 		if (pthread_create(&(vars->phils[i].th), NULL, &routine, rout_v))
@@ -47,7 +46,7 @@ int create_threads(t_vars *vars)
 	}
 	i = 0;
 	usleep(500);
-    while (i < (vars->num_philo))
+	while (i < (vars->num_philo))
 	{
 		pthread_join(vars->phils[i].th, NULL);
 		i++;
@@ -55,16 +54,16 @@ int create_threads(t_vars *vars)
 	return (0);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    t_vars  vars;
-    
+	t_vars	vars;
+
 	init_info(&vars, argc, argv);
 	if (check_argv(&vars, argc))
 		return (1);
 	init_mutex(&vars);
 	init_philos(&vars);
-    create_threads(&vars);
+	create_threads(&vars);
 	clean(&vars);
-    return (0);
+	return (0);
 }

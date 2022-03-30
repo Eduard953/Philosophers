@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 18:17:06 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/29 22:01:11 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/30 13:45:26 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_atoi(const char *nptr)
 	return (nb * j);
 }
 
-int error(char *message)
+int	error(char *message)
 {
 	printf("%s", message);
 	return (1);
@@ -54,16 +54,16 @@ int error(char *message)
 char	*choose_str(int m_code)
 {
 	if (m_code == 0)
-		return("has taken a fork");
+		return ("has taken a fork");
 	if (m_code == 1)
-		return("is eating");
+		return ("is eating");
 	if (m_code == 2)
-		return("is sleeping");
+		return ("is sleeping");
 	if (m_code == 3)
-		return("is thinking");
+		return ("is thinking");
 	if (m_code == 4)
-		return("died");
-	return(NULL);
+		return ("died");
+	return (NULL);
 }
 
 void	message(t_info *phil, int m_code)
@@ -73,7 +73,8 @@ void	message(t_info *phil, int m_code)
 	{
 		if (m_code == 4)
 			phil->vars->dead = 1;
-		printf("%llums Philosopher %d %s\n", gettime() - phil->vars->start, phil->philo_id + 1, choose_str(m_code));
+		printf("%llums Philosopher %d %s\n", gettime() - phil->vars->start,
+			phil->philo_id + 1, choose_str(m_code));
 	}
 	pthread_mutex_unlock(&phil->vars->access);
 }
