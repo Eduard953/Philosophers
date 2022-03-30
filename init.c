@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 12:35:13 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/30 13:50:30 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/30 13:53:18 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int	init_mutex(t_vars *vars)
 	int	i;
 
 	i = 0;
-	pthread_mutex_init(&vars->death, NULL);
-	pthread_mutex_init(&vars->guard_d, NULL);
-	pthread_mutex_lock(&vars->death);
+	// pthread_mutex_init(&vars->death, NULL);
+	// pthread_mutex_init(&vars->guard_d, NULL);
+	// pthread_mutex_lock(&vars->death);
 	pthread_mutex_init(&vars->access, NULL);
 	vars->forks = (pthread_mutex_t *)malloc
 		(sizeof(*vars->forks) * vars->num_philo);
