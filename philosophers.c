@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:12:20 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/29 22:22:44 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/30 13:37:17 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int check_routine(t_info *phil)
 	{
 		message(phil, 4);
 		clean(phil->vars);
-		return (1);
+		exit(0);
 	}
 	return (0);
 }
