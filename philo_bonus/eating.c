@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 18:10:08 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/04/07 19:23:45 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/04/10 19:45:01 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,3 @@ void	drop(t_info *phil)
 	sem_post(phil->vars->forks);
 	sem_post(phil->vars->forks);
 }
-
-// int	check_eat(t_info *phil)
-// {
-// 	if (phil->eaten == phil->vars->max_eat)
-// 		return (1);
-// 	return (0);
-// }

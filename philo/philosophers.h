@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:15:36 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/30 13:59:39 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/04/10 19:42:02 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct s_vars
 	long long		start;
 	struct s_info	*phils;
 	pthread_mutex_t	access;
-	pthread_mutex_t	death;
 	pthread_mutex_t	guard_d;
 	pthread_mutex_t	*forks;
 }	t_vars;
@@ -40,8 +39,6 @@ typedef struct s_info
 	int			philo_id;
 	long long	last_eat;
 	int			eaten;
-	long long	birth;
-	int			ate;
 	int			left_fork;
 	int			right_fork;
 	pthread_t	th;

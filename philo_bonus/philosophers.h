@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:29:36 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/04/07 19:54:30 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/04/10 19:43:49 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ typedef struct s_info
 	int			philo_id;
 	long long	last_eat;
 	int			eaten;
-	long long	birth;
 	int			pid;
-	int			ate;
 	t_vars		*vars;
 }	t_info;
 
@@ -58,7 +56,6 @@ int			error(char *message);
 void		message(t_info *phil, int m_code);
 void		clean(t_vars *vars);
 void		take(t_info *phil);
-int			check_eat(t_info *phil);
 int			create_thread(t_info *phil);
 void		drop(t_info *phil);
 

@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 18:11:18 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/04/10 19:06:01 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/04/10 19:44:49 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*check_routine(void *route_v)
 {
 	t_info	*phil;
-	
+
 	phil = (t_info *)route_v;
 	if (!phil->last_eat)
 		phil->last_eat = gettime();
