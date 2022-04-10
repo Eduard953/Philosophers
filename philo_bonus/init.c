@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/05 12:35:13 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/30 14:25:26 by ebeiline         ###   ########.fr       */
+/*   Created: 2022/04/07 17:22:28 by ebeiline          #+#    #+#             */
+/*   Updated: 2022/04/07 20:05:29 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ int	init_philos(t_vars *vars)
 	{
 		vars->phils[i].philo_id = i;
 		vars->phils[i].birth = 0;
-		vars->phils[i].last_eat = gettime();
+		vars->phils[i].last_eat = 0;
 		vars->phils[i].eaten = 0;
 		vars->phils[i].ate = 0;
-		vars->phils[i].right_fork = i;
-		vars->phils[i].left_fork = (i + 1) % vars->num_philo;
 		vars->phils[i].vars = vars;
 	}
 	return (0);
@@ -44,22 +42,18 @@ void	init_info(t_vars *vars, int argc, char **argv)
 	vars->dead = 0;
 	if (argc == 6)
 		vars->max_eat = ft_atoi(argv[5]);
+	vars->start = 0;
 }
 
-int	init_mutex(t_vars *vars)
+int	init_semaphor(t_vars *vars)
 {
-	int	i;
-
-	i = 0;
-	// pthread_mutex_init(&vars->death, NULL);
-	pthread_mutex_init(&vars->guard_d, NULL);
-	// pthread_mutex_lock(&vars->death);
-	pthread_mutex_init(&vars->access, NULL);
-	vars->forks = (pthread_mutex_t *)malloc
-		(sizeof(*vars->forks) * vars->num_philo);
-	if (!vars->forks)
-		return (error("malloc failed"));
-	while (i < vars->num_philo)
-		pthread_mutex_init(&vars->forks[i++], NULL);
+	sem_unlink("arb");
+	sem_unlink("access");
+	sem_unlink("routine");
+	sem_unlink("forks");
+	vars->arb = sem_open("arb", O_CREAT, 0600, 1);
+	vars->access = sem_open("access", O_CREAT, 0600, 1);
+	vars->routine = sem_open("routine", O_CREAT, 0600, 1);
+	vars->forks = sem_open("forks", O_CREAT, 0600, vars->num_philo);
 	return (0);
 }

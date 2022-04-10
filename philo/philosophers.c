@@ -6,7 +6,7 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:12:20 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/30 14:45:52 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/03/30 15:44:33 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,7 @@ int	check_routine(t_info *phil)
 	if (phil->eaten == phil->vars->max_eat)
 		return (1);
 	if ((gettime() - phil->last_eat) > phil->vars->time_to_die)
-	{
 		message(phil, 4);
-		// clean(phil->vars);
-		// exit(0);
-	}
 	pthread_mutex_lock(&phil->vars->guard_d);
 	if (phil->vars->dead)
 	{

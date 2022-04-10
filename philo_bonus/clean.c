@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 14:51:36 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/03/30 15:10:51 by ebeiline         ###   ########.fr       */
+/*   Created: 2022/04/07 19:26:53 by ebeiline          #+#    #+#             */
+/*   Updated: 2022/04/10 19:30:02 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,19 @@ void	clean(t_vars *vars)
 {
 	int	i;
 
-	if (vars->forks)
+	i = 0;
+	while (i < vars->num_philo)
 	{
-		i = -1;
-		while (++i < vars->num_philo)
-			pthread_mutex_destroy(&vars->forks[i]);
-		free(vars->forks);
-		free(vars->phils);
+		kill(vars->phils[i].pid, SIGKILL);
+		i++;
 	}
-//	pthread_mutex_unlock(&vars->access);
-	pthread_mutex_destroy(&vars->access);
-	pthread_mutex_destroy(&vars->guard_d);
+	sem_close(vars->forks);
+	sem_close(vars->arb);
+	sem_close(vars->access);
+	sem_close(vars->routine);
+	sem_unlink("/forks");
+	sem_unlink("/arb");
+	sem_unlink("/access");
+	sem_unlink("/routine");
+	free(vars->phils);
 }
